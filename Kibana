@@ -5,3 +5,9 @@ sudo dpkg -i kibana-7.10.1-amd64.deb
 # Start Kibana
 sudo systemctl start kibana
 sudo systemctl enable kibana
+
+
+
+#Access Kibana
+Once Kibana is up and running, you can access it by navigating to http://localhost:5601 in your web browser.
+From there, you can configure Kibana to use your Elasticsearch instance and start creating visualizations and dashboards.
