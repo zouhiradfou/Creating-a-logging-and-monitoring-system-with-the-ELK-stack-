@@ -1,0 +1,37 @@
+## Install Logstash
+  # On Ubuntu:
+   wget https://artifacts.elastic.co/downloads/logstash/logstash-7.10.1.deb
+   sudo dpkg -i logstash-7.10.1.deb
+
+  #Start Logstash
+   sudo systemctl start logstash
+   sudo systemctl enable logstash
+
+## Configure Logstash
+   # Create a Logstash configuration file
+      sudo nano /etc/logstash/conf.d/logstash.conf
+
+Here is an example configuration to process system logs:
+
+input {
+  file {
+    path => "/var/log/syslog"
+    start_position => "beginning"
+  }
+}
+
+filter {
+  grok {
+    match => { "message" => "%{SYSLOGLINE}" }
+  }
+  date {
+    match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+  }
+  stdout { codec => rubydebug }
+}

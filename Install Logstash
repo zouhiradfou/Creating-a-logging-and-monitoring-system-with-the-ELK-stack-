@@ -1,7 +1,0 @@
-# On Ubuntu:
-wget https://artifacts.elastic.co/downloads/logstash/logstash-7.10.1.deb
-sudo dpkg -i logstash-7.10.1.deb
-
-# Start Logstash
-sudo systemctl start logstash
-sudo systemctl enable logstash
