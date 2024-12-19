@@ -1,0 +1,38 @@
+# Ubuntu:
+wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.10.1-amd64.deb
+sudo dpkg -i filebeat-7.10.1-amd64.deb
+
+# Configure Filebeat
+sudo nano /etc/filebeat/filebeat.yml
+--------------------------------
+
+1. Define Input
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+    - /var/log/syslog
+    - /var/log/auth.log
+2. Configure Output
+
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  username: "elastic"
+  password: "changeme"
+
+
+output.logstash:
+  hosts: ["localhost:5044"]
+
+3. Enable Elasticsearch and Kibana Setup
+
+setup.kibana:
+  host: "localhost:5601"
+
+4. Test Configuration
+sudo filebeat test config
+-----------------------------------
+# Start Filebeat
+sudo systemctl start filebeat
+sudo systemctl enable filebeat
